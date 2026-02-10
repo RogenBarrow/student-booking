@@ -71,6 +71,7 @@
         <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="button" onclick={signInWithGoogle}>
           Sign in with Google
         </button>
+        <a href="/signup" class="text-sm text-blue-500">First time? Sign up</a>
       </div>
       </form>
 

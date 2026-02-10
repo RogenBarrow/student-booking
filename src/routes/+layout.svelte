@@ -2,6 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import { supabase } from '$lib/supabaseClient';
+	import "../app.css";
 
 	const { data, children } = $props();
 	let session = $state(data.session);

@@ -46,7 +46,7 @@
         <label for="email">Email</label>
         <input
           id="email"
-          class="w-full px-3 py-2 rounded bg-white-400 text-white border border-blue-500 rounded-md"
+          class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"
           type="email"
           name="email"
           placeholder="Enter your email"
@@ -55,7 +55,7 @@
         <label for="password">Password</label>
         <input
           id="password"
-          class="w-full px-3 py-2 rounded bg-white-400 text-white border border-blue-500 rounded-md"
+          class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"
           type="password"
           name="password"
           placeholder="Enter your password"

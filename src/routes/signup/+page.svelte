@@ -7,8 +7,23 @@
     <section class="relative p-7 bg-white/20">
         <div class="absolute inset-0 bg-white/60"></div>
         <div class="relative z-10 text-slate-800">
-            <h2 class="text-2xl front-semibold">Let's get you started</h2>
+            <h2 class="mt-20 justify-center font-extrabold text-center text-9xl front-semibold text-blue-300">Let's get you started</h2>
         </div>
+    </section>
+
+    <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">
+        <form method="POST" use:enhance class="flex flex-col gap-3 w-full max-w-sm mt-15">
+            <label for="">First Name</label>
+            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="text" name="first_name" placeholder="First name"/>
+            <label for="">Last Name</label>
+            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"type="text" name="last_name" placeholder="Last name"/>
+            <label for="">Email</label>
+            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="email"  name="email" id="email" placeholder="Email required"/>
+            <label for="">Password</label>
+            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="password" name="password" placeholder="Password required"/>
+            <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="submit">Create account</button>
+        </form>
+
     </section>
 
     </div>

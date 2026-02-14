@@ -21,8 +21,16 @@ export const handle = async ({ event, resolve }) => {
   );
 
   event.locals.getSession = async () => {
-    const { data } = await event.locals.supabase.auth.getSession();
-    return data.session ?? null;
+    const { data: sessionData } = await event.locals.supabase.auth.getSession();
+    const session = sessionData.session;
+
+    if (!session) return null;
+
+    // Validate the cookie-backed session against Supabase Auth.
+    const { data: userData, error } = await event.locals.supabase.auth.getUser();
+    if (error || !userData.user) return null;
+
+    return { ...session, user: userData.user };
   };
 
   return resolve(event, {

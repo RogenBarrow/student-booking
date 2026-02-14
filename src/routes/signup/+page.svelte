@@ -1,5 +1,6 @@
 <script>
-
+  import { enhance } from '$app/forms';
+  const { form } = $props();
 </script>
 
 <main class="min-h-screen grid place-items-center bg-gradient-to-br from-white via-blue.100 to-blue-300 px-5">
@@ -13,16 +14,19 @@
 
     <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">
         <form method="POST" use:enhance class="flex flex-col gap-3 w-full max-w-sm mt-15">
-            <label for="">First Name</label>
-            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="text" name="first_name" placeholder="First name"/>
-            <label for="">Last Name</label>
-            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"type="text" name="last_name" placeholder="Last name"/>
-            <label for="">Email</label>
-            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="email"  name="email" id="email" placeholder="Email required"/>
-            <label for="">Password</label>
-            <input class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md" type="password" name="password" placeholder="Password required"/>
+            <label for="first_name">First Name</label>
+            <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md" type="text" id="first_name" name="first_name" placeholder="First name"/>
+            <label for="last_name">Last Name</label>
+            <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md"type="text" id="last_name" name="last_name" placeholder="Last name"/>
+            <label for="email">Email</label>
+            <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md" type="email"  name="email" id="email" placeholder="Email required" required/>
+            <label for="password">Password</label>
+            <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md" type="password" id="password" name="password" placeholder="Password required" required/>
             <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="submit">Create account</button>
         </form>
+        {#if form?.message}
+          <p class="mt-3 text-sm text-blue-700">{form.message}</p>
+        {/if}
 
     </section>
 

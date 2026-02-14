@@ -31,4 +31,4 @@
   };
 </script>
 
-<button type="button" on:click={signInWithGoogle}>Sign in with Google</button>
+<button type="button" onclick={signInWithGoogle}>Sign in with Google</button>

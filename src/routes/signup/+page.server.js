@@ -29,7 +29,7 @@ export const actions = {
             return { success: true, message: 'Check your email to confirm your account.' }
         }
 
-        throw redirect(303, '/calendar')
+        throw redirect(303, '/book')
 
 
     }

@@ -17,7 +17,7 @@
       errorMessage = err.message;
       return;
     }
-    goto('/calendar');
+    goto('/book');
   };
 
   const signInWithGoogle = async () => {

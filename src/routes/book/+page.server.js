@@ -1,4 +1,5 @@
 import { bookingFallback } from "$lib/bookingFallBack.js";
+import { toBookingErrorHelper } from "$lib/server/errorHelper.js";
 import { requireSession, requireRole } from "$lib/server/auth.js";
 import { fail } from "@sveltejs/kit";
 
@@ -23,8 +24,8 @@ export const load = async ( {locals, url }) => {
     .order('start_time', { ascending: true });
 
     if (error) {
-        return { slots: [], message: error.message };
-    };
+        return { slots: [], message: toBookingErrorHelper(error.message) };
+    }
 
     return { slots: slots ?? [], start: startIso, end: endIso};
 
@@ -40,14 +41,14 @@ export const actions = {
 
         if (!slotId) {
             return fail(400, { message: 'Missing slot id.'});
-        };
+        }
 
         const { error } = await locals.supabase.rpc('book_slot', {
             p_slot_id: slotId
         });
 
         if (error) {
-            return fail(400, { message: error.message });
+            return fail(400, { message: toBookingErrorHelper(error.message)});
         }
 
         return { success: true, message: 'Booking confirmed' };

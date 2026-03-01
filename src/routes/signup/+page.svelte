@@ -1,6 +1,12 @@
 <script>
   import { enhance } from '$app/forms';
   const { form } = $props();
+
+  let timezone = $state('');
+  $effect(() => {
+    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  });
+  
 </script>
 
 <main class="min-h-screen grid place-items-center bg-gradient-to-br from-white via-blue.100 to-blue-300 px-5">
@@ -22,6 +28,7 @@
             <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md" type="email"  name="email" id="email" placeholder="Email required" required/>
             <label for="password">Password</label>
             <input class="w-full px-3 py-2 rounded bg-white text-black border border-blue-500 rounded-md" type="password" id="password" name="password" placeholder="Password required" required/>
+            <input type="hidden" name="timezone" bind:value={timezone}>
             <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="submit">Create account</button>
         </form>
         {#if form?.message}

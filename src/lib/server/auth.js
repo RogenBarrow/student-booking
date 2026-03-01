@@ -20,7 +20,7 @@ export const getSessionOrNull = async ({ locals }) => {
 export const requireSession = async ({ locals }) => {
   
    const session = await getSessionOrNull({ locals });
-   if (!session) throw redirect (303, '/');
+   if (!session) throw redirect(303, '/');
 
    return session;
 
@@ -43,5 +43,5 @@ export const requireRole = async ({ locals, role }) => {
    if (profile.role !== role) throw error(403, 'Forbidden');
  
    return { session, profile };
- };
+};
 

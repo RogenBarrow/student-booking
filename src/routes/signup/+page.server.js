@@ -5,6 +5,7 @@ export const actions = {
         const form = await request.formData();
         const firstName = String(form.get('first_name') ?? '')
         const lastName = String(form.get('last_name') ?? '');
+        const timezone = String(form.get('timezone') ?? '');
         const email = String(form.get('email') ?? '')
         const password = String(form.get('password') ?? '')
 
@@ -16,7 +17,7 @@ export const actions = {
             email,
             password,
             options: {
-                data: { first_name: firstName, last_name: lastName },
+                data: { first_name: firstName, last_name: lastName, timezone: timezone },
                 emailRedirectTo: `${url.origin}/auth/callback`
             }
         })

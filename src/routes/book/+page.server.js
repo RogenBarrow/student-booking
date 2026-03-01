@@ -2,6 +2,7 @@ import { bookingFallback } from "$lib/bookingFallBack.js";
 import { toBookingErrorHelper } from "$lib/server/errorHelper.js";
 import { requireSession, requireRole } from "$lib/server/auth.js";
 import { fail } from "@sveltejs/kit";
+import { isUUID } from "$lib/server/uuidValidator.js";
 
 
 export const load = async ( {locals, url }) => {
@@ -38,9 +39,10 @@ export const actions = {
         
         const form = await request.formData();
         const slotId = String(form.get('slot_id') ?? '');
+        const isUUIDValidated = isUUID(slotId)
 
-        if (!slotId) {
-            return fail(400, { message: 'Missing slot id.'});
+        if (!isUUIDValidated) {
+            return fail(400, { message: 'Invalid slot id.'});
         }
 
         const { error } = await locals.supabase.rpc('book_slot', {

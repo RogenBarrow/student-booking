@@ -79,7 +79,7 @@ export const actions = {
             .eq('tutor_id', profile.id)
 
             if (error) {
-                if (error.message.includes('Violates foreign key constraint.')) {
+                if (error.message.includes('violates foreign key constraint')) {
                     return fail(400, { message: 'Cannot delete a slot that has already has been booked.' })
                 }
                 return fail(400, { message: toBookingErrorHelper(error.message)})

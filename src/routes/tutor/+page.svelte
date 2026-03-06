@@ -16,8 +16,8 @@
 
     <section>
         {#each data.slots as slot }
-            <p>{slot.start_time}</p>
-            <p>{slot.end_time}</p>
+            <p>{new Date(slot.start_time).toLocaleString()}</p>
+            <p>{new Date(slot.end_time).toLocaleString()}</p>
             <form method="POST" action="?/deleteSlot" use:enhance>
             <input type="hidden" name="slot_id" value={slot.id}>
             <button type="submit">Delete</button>
@@ -27,8 +27,12 @@
 
     <section>
         {#each data.booking as booking }
-        <p>{booking.profiles[0]?.display_name ?? 'Unknown student'}</p>
-        <p>{booking.slot_id}</p>
+        <p>{booking.profiles.display_name ?? 'Unknown student'}</p>
+        <p>{new Date(booking.availability_slots?.start_time).toLocaleString()} — {new Date(booking.availability_slots?.end_time).toLocaleString()}</p>
+    <form method="POST" action="?/cancelBooking" use:enhance>
+        <input type="hidden" name="booking_id" value={booking.id}>
+        <button type="submit">Cancel booking</button>
+    </form>
         {/each}
     </section>
 </main>

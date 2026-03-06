@@ -29,8 +29,23 @@ export const actions = {
         if (!data.session) {
             return { success: true, message: 'Check your email to confirm your account.' }
         }
-
+        
+        const { error: profileError } = await locals.supabase.from('profiles').upsert({
+            id: data.user?.id,
+            display_name: `${firstName} ${lastName}`.trim() || email,
+            timezone: timezone || 'UTC',
+            role: 'student',
+            email: email
+        }, { onConflict: 'id', ignoreDuplicates: true });
+        
+        if (profileError) {
+            console.error('Profile upsert error:', profileError);
+            return fail(400, { message: profileError.message });
+        }
+        
         throw redirect(303, '/book')
+        
+        
 
 
     }

@@ -11,13 +11,19 @@
     event?.preventDefault();
     errorMessage = '';
     loading = true;
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+    const { data: { user }, error: err } = await supabase.auth.signInWithPassword({ email, password });
     loading = false;
     if (err) {
       errorMessage = err.message;
       return;
     }
-    goto('/book');
+    const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user?.id)
+    .single();
+    goto(profile?.role === 'tutor' ? '/tutor' : '/book');
+
   };
 
   const signInWithGoogle = async () => {

@@ -118,8 +118,6 @@ export const actions = {
                     return fail(400, { message: toBookingErrorHelper(rpcError.message) });
             }
 
-            console.log('booking data:', JSON.stringify(booking, null, 2));
-
             await sendCancellationEmail({
                 // @ts-ignore
                 to: booking.profiles?.email,

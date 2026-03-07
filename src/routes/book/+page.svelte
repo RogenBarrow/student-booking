@@ -2,6 +2,7 @@
 
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
+    import BookingCalender from '$lib/component/BookingCalender.svelte';
     const { data, form } = $props();
 
     const signOut = async () => {
@@ -20,23 +21,10 @@
         <h1 class="text-2xl font-bold text-slate-800">Book your time</h1>
         <button onclick={signOut} class="px-4 py-2 rounded-md bg-white/60 text-slate-700 hover:bg-white/80 border border-white/40">Sign out</button>
        </div>
-        <p class="text-slate-600 text-sm mb-4">Open Slots: { data.slots.length }</p>
-    {#if form?.message}
-        <p>{ form.message }</p>
-    {/if}
-    {#if data.slots.length === 0}
-    <p class="text-slate-500 text-center mt-10">No available slots.</p>
-    {:else}
-    <div>
-        {#each data.slots as slot }
-        <article class="bg-white/50 rounded-xl p-4 flex justify-between items-center mb-3">
-            <p>{new Date(slot.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short'})} — {new Date(slot.end_time).toLocaleTimeString([], {timeStyle: 'short'})}</p>
-            <form method="POST" action="?/book">
-                <button type="submit" name="slot_id" value={slot.id} class="px-4 py-2 rounded-md bg-blue-500 text-white">Book slot</button>
-            </form>
-        </article>
-        {/each}
-    </div>
+       {#if data.slots.length === 0}
+       <p class="text-slate-500 text-center mt-10">No available slots.</p>
+   {:else}
+       <BookingCalender slots={data.slots} {form} />
    {/if}
-</div>
+ </div>   
 </main>

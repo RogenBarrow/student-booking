@@ -53,12 +53,19 @@
                             {#each month.weeks as weekDates}
                                 <Calendar.GridRow class="flex">
                                     {#each weekDates as date}
-                                        <Calendar.Cell {date} month={month.value} class="flex-1 p-1 text-center">
-                                            <Calendar.Day class="w-full aspect-square rounded-full flex items-center justify-center text-sm
+                                    <Calendar.Cell {date} month={month.value} class="flex-1 p-1">
+                                        <div class="flex flex-col items-center gap-0.5">
+                                            <Calendar.Day class="w-8 h-8 rounded-full flex items-center justify-center text-sm
                                                 data-[selected]:bg-blue-500 data-[selected]:text-white
                                                 data-[unavailable]:text-slate-300 data-[unavailable]:pointer-events-none
                                                 hover:bg-blue-100 cursor-pointer transition-colors" />
-                                        </Calendar.Cell>
+                                            {#if !isDateUnavailable(date)}
+                                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                            {:else}
+                                                <span class="w-1.5 h-1.5"></span>
+                                            {/if}
+                                        </div>
+                                    </Calendar.Cell>                                    
                                     {/each}
                                 </Calendar.GridRow>
                             {/each}

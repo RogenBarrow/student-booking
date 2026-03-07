@@ -49,19 +49,19 @@
 
     <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">
       <form class="flex flex-col gap-3 w-full max-w-sm mt-30" onsubmit={signIn}>
-        <label for="email">Email</label>
+        <label class="text-sm font-medium text-slate-700" for="email">Email</label>
         <input
           id="email"
-          class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"
+          class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md"
           type="email"
           name="email"
           placeholder="Enter your email"
           bind:value={email}
         />
-        <label for="password">Password</label>
+        <label class="text-sm font-medium text-slate-700" for="password">Password</label>
         <input
           id="password"
-          class="w-full px-3 py-2 rounded bg-white-400 text-black border border-blue-500 rounded-md"
+          class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md"
           type="password"
           name="password"
           placeholder="Enter your password"

@@ -3,6 +3,7 @@ import { toBookingErrorHelper } from "$lib/server/errorHelper.js";
 import { requireSession, requireRole } from "$lib/server/auth.js";
 import { fail } from "@sveltejs/kit";
 import { isUUID } from "$lib/server/uuidValidator.js";
+import { sendConfirmationEmail } from "$lib/server/mail.js";
 
 
 export const load = async ( {locals, url }) => {
@@ -45,6 +46,11 @@ export const actions = {
             return fail(400, { message: 'Invalid slot id.'});
         }
 
+        const {data: slot} = await locals.supabase
+        .from('availability_slots')
+        .select('start_time, end_time')
+        .eq('id', slotId).single()
+
         const { error } = await locals.supabase.rpc('book_slot', {
             p_slot_id: slotId
         });
@@ -52,6 +58,17 @@ export const actions = {
         if (error) {
             return fail(400, { message: toBookingErrorHelper(error.message)});
         }
+
+        const { data: {user} } = await locals.supabase.auth.getUser()
+
+        console.log('data: ', user?.email, slot?.start_time, slot?.end_time)
+
+        await sendConfirmationEmail({ 
+        to: user?.email,
+        startTime: new Date(slot?.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC'}),
+        endTime: new Date(slot?.end_time).toLocaleTimeString([], {timeStyle: 'short', timeZone: 'UTC'})
+})
+
 
         return { success: true, message: 'Booking confirmed' };
 

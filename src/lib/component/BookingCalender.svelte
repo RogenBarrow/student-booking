@@ -1,6 +1,7 @@
 <script>
     import { Calendar } from 'bits-ui';
     import { today, getLocalTimeZone } from '@internationalized/date';
+    import { enhance } from '$app/forms';
 
     const { slots, form } = $props();
 
@@ -87,9 +88,9 @@
             {#each selectedSlots as slot}
                 <article class="bg-white/50 rounded-xl p-4 flex justify-between items-center mb-3">
                     <p class="text-slate-700 font-medium">
-                        {new Date(slot.start_time).toLocaleTimeString([], {timeStyle: 'short'})} — {new Date(slot.end_time).toLocaleTimeString([], {timeStyle: 'short'})}
+                        {new Date(slot.start_time).toLocaleTimeString([], {timeStyle: 'short', timeZone: 'UTC'})} — {new Date(slot.end_time).toLocaleTimeString([], {timeStyle: 'short', timeZone: 'UTC'})}
                     </p>
-                    <form method="POST" action="?/book">
+                    <form method="POST" action="?/book" use:enhance>
                         <button type="submit" name="slot_id" value={slot.id} class="px-4 py-2 rounded-md bg-blue-500 text-white">Book</button>
                     </form>
                 </article>

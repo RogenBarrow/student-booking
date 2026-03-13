@@ -14,6 +14,7 @@ export const load = async ( {locals }) => {
     .from('availability_slots')
     .select('id, tutor_id, start_time, end_time, status')
     .eq('tutor_id', profile.id)
+    .eq('status', 'open')
     .order('start_time', { ascending: true });
 
     if (error) {
@@ -24,7 +25,7 @@ export const load = async ( {locals }) => {
     .from('bookings')
     .select('id, slot_id, status, profiles!bookings_student_id_fkey(display_name, email), availability_slots(start_time, end_time)')
     .eq('tutor_id', profile.id)
-    .eq('status', 'booked')
+    .neq('status', 'cancelled')
 
     if (bookingError) {
         return { slots: [], message: toBookingErrorHelper(bookingError.message) };
@@ -46,6 +47,13 @@ export const actions = {
 
         if (!startTime || !endTime) {
             return fail(400, { message: 'Start time and end time are required.' })
+        }
+
+        const start = new Date(startTime)
+        const end = new Date(endTime)
+
+        if ( end < start) {
+            return fail(400, { message: 'End time must be after start time.'})
         }
 
         const { error } = await locals.supabase

@@ -3,7 +3,8 @@
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
     
-    const { data } = $props();
+    const { data, form } = $props();
+    
     const signOut = async () => {
     await supabase.auth.signOut();
     goto('/');
@@ -30,6 +31,9 @@
             <label class="text-sm font-medium text-slate-700" for="">End time</label>
                 <input class="px-3 py-2 rounded-md bg-white/70 text-slate-800 border border-blue-200" id="end_time" type="datetime-local" name="end_time"> 
                 <button class="px-4 py-2 rounded-md bg-blue-500 text-white self-start" type="submit">Create Booking</button>
+                {#if form?.message}
+                <p class="text-sm text-red-500">{form.message}</p>
+                {/if}
             </form>
         </section>
 
@@ -39,9 +43,9 @@
         {#each data.slots as slot }
             <article class="bg-white/70 rounded-lg p-3 flex justify-between items-center mb-2">
                 <p class="text-slate-700 font-medium">
-                    {new Date(slot.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short'})}
+                    {new Date(slot.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC'})}
                     —
-                    {new Date(slot.end_time).toLocaleTimeString([], {timeStyle: 'short'})}
+                    {new Date(slot.end_time).toLocaleTimeString([], {timeStyle: 'short', timeZone: 'UTC'})}
                 </p>                
             <form method="POST" action="?/deleteSlot" use:enhance>
             <input type="hidden" name="slot_id" value={slot.id}>
@@ -56,9 +60,9 @@
         {#each data.booking as booking }
         <article class="bg-white/70 rounded-lg p-3 flex justify-between items-center mb-2">
         <p class="text-slate-700 font-medium">{booking.profiles.display_name ?? 'Unknown student'}</p>
-        <p class="text-slate-500 text-sm">{new Date(booking.availability_slots?.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short'})}
+        <p class="text-slate-500 text-sm">{new Date(booking.availability_slots?.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC'})}
             —
-            {new Date(booking.availability_slots?.end_time).toLocaleTimeString([], {timeStyle: 'short'})}</p>
+            {new Date(booking.availability_slots?.end_time).toLocaleTimeString([], {timeStyle: 'short', timeZone: 'UTC'})}</p>
     <form method="POST" action="?/cancelBooking" use:enhance>
         <input type="hidden" name="booking_id" value={booking.id}>
         <button class="px-4 py-2 rounded-md bg-red-400 text-white" type="submit">Cancel booking</button>

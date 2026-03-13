@@ -28,8 +28,13 @@
     <form class="flex flex-col gap-3 max-w-sm" method="POST" action="?/createSlot" use:enhance>
             <label class="text-sm font-medium text-slate-700" for="">Start time</label>
                 <input class="px-3 py-2 rounded-md bg-white/70 text-slate-800 border border-blue-200" id="start_time" type="datetime-local" name="start_time">
-            <label class="text-sm font-medium text-slate-700" for="">End time</label>
-                <input class="px-3 py-2 rounded-md bg-white/70 text-slate-800 border border-blue-200" id="end_time" type="datetime-local" name="end_time"> 
+                <label class="text-sm font-medium text-slate-700" for="duration">Duration</label>
+                <select class="px-3 py-2 rounded-md bg-white/70 text-slate-800 border border-blue-200" id="duration" name="duration">
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="90">1.5 hours</option>
+                    <option value="120">2 hours</option>
+                </select>                
                 <button class="px-4 py-2 rounded-md bg-blue-500 text-white self-start" type="submit">Create Booking</button>
                 {#if form?.message}
                 <p class="text-sm text-red-500">{form.message}</p>

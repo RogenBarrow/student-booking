@@ -43,18 +43,16 @@ export const actions = {
 
         const form = await request.formData();
         const startTime = String(form.get('start_time') ?? '');
-        const endTime = String(form.get('end_time') ?? '');
+        const duration = Number(form.get('duration') ?? 0);
 
-        if (!startTime || !endTime) {
-            return fail(400, { message: 'Start time and end time are required.' })
+        if (!startTime || !duration) {
+         return fail(400, { message: 'Start time and duration are required.' })
         }
 
-        const start = new Date(startTime)
-        const end = new Date(endTime)
+        const start = new Date(startTime + ':00Z');
+        const end = new Date(start.getTime() + duration * 60 * 1000);
+        const endTime = end.toISOString();
 
-        if ( end < start) {
-            return fail(400, { message: 'End time must be after start time.'})
-        }
 
         const { error } = await locals.supabase
             .from('availability_slots')

@@ -1,6 +1,6 @@
 import { bookingFallback } from "$lib/bookingFallBack.js";
 import { toBookingErrorHelper } from "$lib/server/errorHelper.js";
-import { requireSession, requireRole } from "$lib/server/auth.js";
+import { requireRole } from "$lib/server/auth.js";
 import { fail } from "@sveltejs/kit";
 import { isUUID } from "$lib/server/uuidValidator.js";
 import { sendConfirmationEmail } from "$lib/server/mail.js";
@@ -8,7 +8,7 @@ import { sendConfirmationEmail } from "$lib/server/mail.js";
 
 export const load = async ( {locals, url }) => {
     // session management
-   await requireSession({ locals });
+  const { profile } = await requireRole({ locals, role: 'student'});
    
 
    //read the url parameters
@@ -29,7 +29,20 @@ export const load = async ( {locals, url }) => {
         return { slots: [], message: toBookingErrorHelper(error.message) };
     }
 
-    return { slots: slots ?? [], start: startIso, end: endIso};
+    const { data: bookings, error: bookingError } = await locals.supabase
+    .from('bookings')
+    .select('id, status, availability_slots(start_time, end_time)')
+    .eq('student_id', profile.id)
+    .neq('status', 'cancelled')
+    .order('created_at', { ascending: false });
+
+    if (bookingError) {
+        return { slots: [], message: toBookingErrorHelper(bookingError.message) };
+    }
+
+
+    return { slots: slots ?? [], bookings: bookings ?? [], start: startIso, end: endIso };
+
 
 };
 
@@ -61,7 +74,6 @@ export const actions = {
 
         const { data: {user} } = await locals.supabase.auth.getUser()
 
-        console.log('data: ', user?.email, slot?.start_time, slot?.end_time)
 
         await sendConfirmationEmail({ 
         to: user?.email,

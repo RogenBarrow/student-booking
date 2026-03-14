@@ -18,7 +18,7 @@ export const load = async ( {locals }) => {
     .order('start_time', { ascending: true });
 
     if (error) {
-        return { slots: [], message: toBookingErrorHelper(error.message) };
+        return { slots: [], booking: [], message: toBookingErrorHelper(error.message) };
     }
 
     const { data: booking, error: bookingError } = await locals.supabase
@@ -28,8 +28,8 @@ export const load = async ( {locals }) => {
     .neq('status', 'cancelled')
 
     if (bookingError) {
-        return { slots: [], message: toBookingErrorHelper(bookingError.message) };
-    }
+        return { slots: [], booking: [], message: toBookingErrorHelper(bookingError.message) };
+    }    
 
    return { slots: slots, booking: booking}
 

@@ -26,8 +26,8 @@ export const load = async ( {locals, url }) => {
     .order('start_time', { ascending: true });
 
     if (error) {
-        return { slots: [], message: toBookingErrorHelper(error.message) };
-    }
+        return { slots: [], bookings: [], message: toBookingErrorHelper(error.message) };
+    }    
 
     const { data: bookings, error: bookingError } = await locals.supabase
     .from('bookings')
@@ -37,9 +37,8 @@ export const load = async ( {locals, url }) => {
     .order('created_at', { ascending: false });
 
     if (bookingError) {
-        return { slots: [], message: toBookingErrorHelper(bookingError.message) };
-    }
-
+        return { slots: [], bookings: [], message: toBookingErrorHelper(bookingError.message) };
+    }    
 
     return { slots: slots ?? [], bookings: bookings ?? [], start: startIso, end: endIso };
 
@@ -84,6 +83,37 @@ export const actions = {
 
         return { success: true, message: 'Booking confirmed' };
 
+    },
+
+    cancelBooking: async ({ request, locals }) => {
+        const { profile } = await requireRole({ locals, role: 'student' });
+        const form = await request.formData();
+        const bookingId = String(form.get('booking_id') ?? '');
+    
+        if (!isUUID(bookingId)) {
+            return fail(400, { message: 'Invalid booking id.' });
+        }
+    
+       
+        const { data: booking, error: fetchError } = await locals.supabase
+            .from('bookings')
+            .select('id')
+            .eq('id', bookingId)
+            .eq('student_id', profile.id)
+            .single();
+    
+        if (fetchError || !booking) {
+            return fail(403, { message: 'Booking not found.' });
+        }
+    
+        const { error } = await locals.supabase.rpc('cancel_booking', { p_booking_id: bookingId });
+    
+        if (error) {
+            return fail(400, { message: toBookingErrorHelper(error.message) });
+        }
+    
+        return { success: true, message: 'Booking cancelled.' };
     }
+    
 
 };

@@ -79,7 +79,7 @@
 
     <!-- Slots for selected day -->
     <div class="flex-1">
-        {#if form?.message}
+        {#if form?.message && !form?.success}
             <p class="text-red-500 text-sm mb-4">{form.message}</p>
         {/if}
         {#if selectedSlots.length === 0}

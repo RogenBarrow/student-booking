@@ -1,6 +1,8 @@
 <script>
   import { supabase } from '$lib/supabaseClient';
   import { goto } from '$app/navigation';
+  import { fly } from 'svelte/transition';
+
 
   let email = $state('');
   let password = $state('');
@@ -44,7 +46,13 @@
       class="relative p-7 text-slate-900 bg-white/20 backdrop-blur-md"
       style="background-image: url('/auth-hero.jpg'); background-size: cover; background-position: center;"
     >
-      <!-- left panel -->
+      <h2 
+      in:fly={{ y: 40, duration: 700, delay: 100 }}
+      class="mt-20 font-extrabold text-center text-9xl font-semibold text-blue-300">
+      Book. Learn. Grow.
+      </h2>
+  
+      
     </section>
 
     <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">

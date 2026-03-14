@@ -2,6 +2,7 @@
     import { enhance } from "$app/forms";
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
+    import { LogOut } from 'lucide-svelte';
     
     const { data, form } = $props();
     
@@ -18,7 +19,13 @@
    
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold text-slate-800" >Admin Dashboard</h1>
-        <button class="px-4 py-2 rounded-md bg-white/60 text-slate-700 hover:bg-white/80 border border-white/40" onclick={signOut}>Sign out</button>
+        <button 
+    onclick={signOut} 
+    class="p-2 rounded-md bg-white/60 text-red-700 hover:bg-white/80 border border-white/40"
+    title="Sign out"
+>
+    <LogOut size={18} />
+</button>
     </div>   
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

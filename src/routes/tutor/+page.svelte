@@ -15,7 +15,7 @@
 </script>
 
 <main class="min-h-screen flex flex-col items-center pt-16 bg-gradient-to-br from-white via-blue-100 to-blue-400 px-5 p-8">
-   <div class="w-[min(1100px,95vw)] flex flex-col gap-6 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_30px_80px_rgba(30,64,175,0.25)] p-8">
+   <div class="w-[min(1100px,90vw)] flex flex-col gap-6 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_30px_80px_rgba(30,64,175,0.25)] p-8">
    
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold text-slate-800" >Admin Dashboard</h1>
@@ -70,7 +70,7 @@
     <section class="bg-white/50 rounded-xl p-4 flex flex-col">
         <h2 class="text-lg font-semibold text-slate-800 mb-3">Upcoming Bookings</h2>
         {#each data.booking as booking }
-        <article class="bg-white/70 rounded-lg p-3 flex justify-between items-center mb-2">
+        <article class="bg-white/70 rounded-lg p-3 flex-col gap-2 sm:flex-row items-center mb-2">
         <p class="text-slate-700 font-medium">{booking.profiles.display_name ?? 'Unknown student'}</p>
         <p class="text-slate-500 text-sm">{new Date(booking.availability_slots?.start_time).toLocaleString([], {dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC'})}
             —

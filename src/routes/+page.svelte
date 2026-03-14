@@ -40,23 +40,23 @@
   };
 </script>
 
-<main class="min-h-screen grid place-items-center bg-gradient-to-br from-white via-blue-100 to-blue-400 px-5">
-  <div class="w-[min(1100px,95vw)] min-h-[640px] grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] rounded-3xl overflow-hidden bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_30px_80px_rgba(30,64,175,0.25)]">
+<main class="min-h-dvh grid place-items-center bg-gradient-to-br from-white via-blue-100 to-blue-400 px-5 py-8">
+  <div class="w-[min(1100px,90vw)] grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] rounded-3xl overflow-hidden bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_30px_80px_rgba(30,64,175,0.25)]">
     <section
-      class="relative p-7 text-slate-900 bg-white/20 backdrop-blur-md"
+      class="relative p-7 text-slate-900 bg-white/20 backdrop-blur-md hidden lg:block"
       style="background-image: url('/auth-hero.jpg'); background-size: cover; background-position: center;"
     >
       <h2 
       in:fly={{ y: 40, duration: 700, delay: 100 }}
-      class="mt-20 font-extrabold text-center text-9xl font-semibold text-blue-300">
+      class="mt-20 font-extrabold text-center text-5xl lg:text-9xl font-semibold text-blue-300">
       Book. Learn. Grow.
       </h2>
   
       
     </section>
 
-    <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">
-      <form class="flex flex-col gap-3 w-full max-w-sm mt-30" onsubmit={signIn}>
+    <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900 flex items-center justify-center">
+      <form class="flex flex-col gap-3 w-full max-w-sm" onsubmit={signIn}>
         <label class="text-sm font-medium text-slate-700" for="email">Email</label>
         <input
           id="email"

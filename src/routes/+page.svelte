@@ -76,7 +76,7 @@
           bind:value={password}
         />
         <div class="w-full max-w-sm flex flex-col gap-3">
-        <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="submit" disabled={loading}>
+        <button class="w-full py-2.5 rounded-md bg-blue-500 text-white disabled:opacity-50 disabled:cursor-not-allowed" type="submit" disabled={loading || !email || !password}>
           {loading ? 'Signing in…' : 'Sign in'}
         </button>
         {#if errorMessage}

@@ -6,6 +6,7 @@
   $effect(() => {
     timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   });
+
   
 </script>
 
@@ -21,15 +22,15 @@
     <section class="p-12 bg-white/70 backdrop-blur-md text-slate-900">
         <form method="POST" use:enhance class="flex flex-col gap-3 w-full max-w-sm mt-15">
             <label class="text-sm font-medium text-slate-700" for="first_name">First Name</label>
-            <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md" type="text" id="first_name" name="first_name" placeholder="First name"/>
+            <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md" type="text" id="first_name" name="first_name" placeholder="First name" required/>
             <label class="text-sm font-medium text-slate-700" for="last_name">Last Name</label>
-            <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md"type="text" id="last_name" name="last_name" placeholder="Last name"/>
+            <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md"type="text" id="last_name" name="last_name" placeholder="Last name" required/>
             <label class="text-sm font-medium text-slate-700" for="email">Email</label>
             <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md" type="email"  name="email" id="email" placeholder="Email required" required/>
             <label class="text-sm font-medium text-slate-700" for="password">Password</label>
             <input class="w-full px-3 py-2 rounded bg-white/70 text-black border border-blue-200 rounded-md" type="password" id="password" name="password" placeholder="Password required" required/>
             <input type="hidden" name="timezone" bind:value={timezone}>
-            <button class="w-full py-2.5 rounded-md bg-blue-500 text-white" type="submit">Create account</button>
+            <button class="w-full py-2.5 rounded-md bg-blue-500 text-white disabled:opacity-50 disabled:cursor-not-allowed" type="submit">Create account</button>
         </form>
         {#if form?.message}
           <p class="mt-3 text-sm text-blue-700">{form.message}</p>
